@@ -15,6 +15,8 @@
     .result { margin-top: 20px; font-size: 18px; font-weight: bold; }
     .extended { font-style: italic; font-size: 14px; color: #777; }
     .feedback { font-size: 16px; margin-top: 10px; }
+    .incorrect { color: red; }
+    .correct { color: green; }
   </style>
 </head>
 <body>
@@ -104,16 +106,46 @@
   <script>
     function checkAnswers() {
       const answers = {
-        q1: 'C',
-        q2: 'B',
-        q3: 'C',
-        q4: 'informational social influence involves seeking information from others, while normative social influence is conforming to fit in',
-        q5: 'A',
-        q6: 'B',
-        q7: 'strengths include simplicity, weaknesses include oversimplification of memory processing',
-        q8: 'C',
-        q9: 'B',
-        q10: 'nature vs nurture debate is crucial in cognitive development, as Piaget focused on both environmental and biological factors'
+        q1: {
+          correct: 'C',
+          feedback: 'Conformity refers to changing behavior due to group pressure, not just reward, authority, or personal experience.'
+        },
+        q2: {
+          correct: 'B',
+          feedback: 'According to the multi-store model, short-term memory lasts approximately 18-30 seconds.'
+        },
+        q3: {
+          correct: 'C',
+          feedback: 'In the concrete operational stage, children develop the ability to conserve and understand logical operations.'
+        },
+        q4: {
+          correct: 'informational social influence involves seeking information from others, while normative social influence is conforming to fit in',
+          feedback: 'Ensure you differentiate between informational social influence (wanting to be correct) and normative social influence (wanting to fit in).'
+        },
+        q5: {
+          correct: 'A',
+          feedback: 'The hippocampus is the brain structure primarily associated with long-term memory.'
+        },
+        q6: {
+          correct: 'B',
+          feedback: 'Short-term memory lasts a shorter duration compared to other types of memory, typically around 18–30 seconds.'
+        },
+        q7: {
+          correct: 'strengths include simplicity, weaknesses include oversimplification of memory processing',
+          feedback: 'When discussing the multi-store model, focus on its simplicity and the issue of it oversimplifying memory. Mention supporting studies like Atkinson & Shiffrin.'
+        },
+        q8: {
+          correct: 'C',
+          feedback: 'Piaget’s concrete operational stage occurs from approximately 7 to 11 years old, where children gain logical thinking abilities.'
+        },
+        q9: {
+          correct: 'B',
+          feedback: 'A growth mindset is based on the belief that intelligence can grow with effort and perseverance, unlike a fixed mindset.'
+        },
+        q10: {
+          correct: 'nature vs nurture debate is crucial in cognitive development, as Piaget focused on both environmental and biological factors',
+          feedback: 'Your evaluation should explore how both nature (biological maturation) and nurture (environmental factors) influence cognitive development. Mention Piaget’s emphasis on the maturation of cognitive structures.'
+        }
       };
 
       let score = 0;
@@ -123,14 +155,21 @@
       for (let q in answers) {
         const response = form[q].value;
         
-        if (form[q].type === 'radio' && response === answers[q]) {
+        if (form[q].type === 'radio' && response === answers[q].correct) {
           score++;
-        } else if (form[q].type === 'textarea' && response.toLowerCase().includes(answers[q].toLowerCase())) {
-          score++;
-        }
-
-        if (form[q].type === 'textarea' && response !== "") {
-          feedbackText += `<strong>Feedback for Question ${q.slice(1)}:</strong> Check if you included the key points of the answer. (e.g., for Q4, did you explain both informational and normative social influence?)<br>`;
+          feedbackText += `<p class="correct">Question ${q.slice(1)}: Correct! ${answers[q].feedback}</p>`;
+        } else if (form[q].type === 'textarea') {
+          const userAnswer = response.trim().toLowerCase();
+          const correctAnswer = answers[q].correct.toLowerCase();
+          
+          if (userAnswer.includes(correctAnswer)) {
+            score++;
+            feedbackText += `<p class="correct">Question ${q.slice(1)}: Correct! ${answers[q].feedback}</p>`;
+          } else {
+            feedbackText += `<p class="incorrect">Question ${q.slice(1)}: Incorrect. ${answers[q].feedback}</p>`;
+          }
+        } else {
+          feedbackText += `<p class="incorrect">Question ${q.slice(1)}: Incorrect. ${answers[q].feedback}</p>`;
         }
       }
 
@@ -140,3 +179,4 @@
   </script>
 </body>
 </html>
+
