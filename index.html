@@ -14,6 +14,7 @@
     button { padding: 10px 20px; font-size: 16px; margin-top: 10px; }
     .result { margin-top: 20px; font-size: 18px; font-weight: bold; }
     .extended { font-style: italic; font-size: 14px; color: #777; }
+    .feedback { font-size: 16px; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -97,6 +98,7 @@
       <button type="button" onclick="checkAnswers()">Submit Answers</button>
     </form>
     <div class="result" id="result"></div>
+    <div id="feedback" class="feedback"></div>
   </div>
 
   <script>
@@ -105,27 +107,36 @@
         q1: 'C',
         q2: 'B',
         q3: 'C',
-        q4: 'This can be evaluated based on student’s own understanding',
+        q4: 'informational social influence involves seeking information from others, while normative social influence is conforming to fit in',
         q5: 'A',
         q6: 'B',
-        q7: 'Strengths and limitations of the multi-store model',
+        q7: 'strengths include simplicity, weaknesses include oversimplification of memory processing',
         q8: 'C',
         q9: 'B',
-        q10: 'Evaluation of nature vs nurture in Piaget’s theory'
+        q10: 'nature vs nurture debate is crucial in cognitive development, as Piaget focused on both environmental and biological factors'
       };
 
       let score = 0;
       const form = document.forms['quizForm'];
+      let feedbackText = '';
+
       for (let q in answers) {
-        if (form[q] && form[q].value === answers[q]) {
+        const response = form[q].value;
+        
+        if (form[q].type === 'radio' && response === answers[q]) {
           score++;
-        } else if (form[q] && form[q].value !== answers[q] && form[q].value !== "") {
-          score--; // penalizing incorrect extended responses
+        } else if (form[q].type === 'textarea' && response.toLowerCase().includes(answers[q].toLowerCase())) {
+          score++;
+        }
+
+        if (form[q].type === 'textarea' && response !== "") {
+          feedbackText += `<strong>Feedback for Question ${q.slice(1)}:</strong> Check if you included the key points of the answer. (e.g., for Q4, did you explain both informational and normative social influence?)<br>`;
         }
       }
+
       document.getElementById('result').innerText = `You scored ${score} out of 10.`;
+      document.getElementById('feedback').innerHTML = feedbackText;
     }
   </script>
 </body>
 </html>
-
