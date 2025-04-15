@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR GCSE Psychology Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    .quiz-container { background: white; padding: 20px; border-radius: 10px; max-width: 800px; margin: auto; }
+    h2 { color: #333; }
+    .question { margin-bottom: 20px; }
+    .question p { font-weight: bold; }
+    label { display: block; margin-bottom: 5px; }
+    button { padding: 10px 20px; font-size: 16px; margin-top: 10px; }
+    .result { margin-top: 20px; font-size: 18px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>OCR GCSE Psychology Quiz</h2>
+    <form id="quizForm">
+      <div class="question">
+        <p>1. What is conformity?</p>
+        <label><input type="radio" name="q1" value="A"> A. Changing behavior due to a reward</label>
+        <label><input type="radio" name="q1" value="B"> B. Changing beliefs due to personal experience</label>
+        <label><input type="radio" name="q1" value="C"> C. Changing behavior due to group pressure</label>
+        <label><input type="radio" name="q1" value="D"> D. Changing attitudes due to authority</label>
+      </div>
+
+      <div class="question">
+        <p>2. According to the multi-store model, what is the duration of short-term memory?</p>
+        <label><input type="radio" name="q2" value="A"> A. Unlimited</label>
+        <label><input type="radio" name="q2" value="B"> B. 18–30 seconds</label>
+        <label><input type="radio" name="q2" value="C"> C. 1–2 seconds</label>
+        <label><input type="radio" name="q2" value="D"> D. 5–10 minutes</label>
+      </div>
+
+      <div class="question">
+        <p>3. Which of the following is a key feature of the concrete operational stage?</p>
+        <label><input type="radio" name="q3" value="A"> A. Egocentrism</label>
+        <label><input type="radio" name="q3" value="B"> B. Hypothetical thinking</label>
+        <label><input type="radio" name="q3" value="C"> C. Conservation</label>
+        <label><input type="radio" name="q3" value="D"> D. Object permanence</label>
+      </div>
+
+      <button type="button" onclick="checkAnswers()">Submit Answers</button>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function checkAnswers() {
+      const answers = {
+        q1: 'C',
+        q2: 'B',
+        q3: 'C'
+      };
+      let score = 0;
+      const form = document.forms['quizForm'];
+      for (let q in answers) {
+        if (form[q].value === answers[q]) {
+          score++;
+        }
+      }
+      document.getElementById('result').innerText = `You scored ${score} out of 3.`;
+    }
+  </script>
+</body>
+</html>
